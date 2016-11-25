@@ -14,9 +14,12 @@ void decreaseBrightness(bmpBITMAP_FILE &image, int brightness);
 void increaseContrast(bmpBITMAP_FILE &image, double contrast);
 void decreaseContrast(bmpBITMAP_FILE &image, double contrast);
 
+void insertionSort(int window[]);
 void medianSmooth(bmpBITMAP_FILE &image);
 
 void histogramEqualization(bmpBITMAP_FILE &image);
+
+void edgeDetection(bmpBITMAP_FILE &image);
 
 void thinningAlg(bmpBITMAP_FILE &image);
 

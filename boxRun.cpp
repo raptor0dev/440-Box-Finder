@@ -36,9 +36,9 @@ int main()
 	while (exitflag == 0)
 	{
 		cout << endl << "Choose a processing option." << endl;
-		cout << "0: display array, 1: increase brightness, 2: decrease brightness." << endl;
-		cout << "3: increase contrast, 4: decrease contrst, 5: median smooth << endl;" << endl;
-		cout << "6: equalize, 7: thin, 8: exit and save image copy" << endl;
+		cout << "0: display array, 1: increase brightness, 2: decrease brightness" << endl;
+		cout << "3: increase contrast, 4: decrease contrast, 5: median smooth" << endl;
+		cout << "6: equalize, 7: edge detect, 8: thin, 9: exit and save image copy" << endl;
 		char option;
 		cin >> option;
 
@@ -72,15 +72,20 @@ int main()
 			decreaseContrast(copy2, contrast2);
 			break;
 		case '5':
-			cout << "Better try again" << endl;
+			cout << "median smoothing" << endl;
+			medianSmooth(copy2);
 			break;
 		case '6':
-			cout << "Better try again" << endl;
+			cout << "equalizing" << endl;
+			histogramEqualization(copy2);
 			break;
 		case '7':
-			cout << "Better try again" << endl;
+			cout << "not implemented edge detect" << endl;
 			break;
 		case '8':
+			cout << "not implemented thin" << endl;
+			break;
+		case '9':
 			cout << "Finished" << endl;
 			exitflag = 1;
 			break;
