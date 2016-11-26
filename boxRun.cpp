@@ -26,10 +26,10 @@ int main()
 		"removed from main memory.";
 
 	//save copy1 to a output bitmap to show its the same as the original
-	cout << endl << "To show that the first copy starts as " <<
-		"an exact copy of the original,";
-	cout << endl << "Save the copy as a bitmap." << endl;
-	Save_Bitmap_File(copy1);
+	//cout << endl << "To show that the first copy starts as " <<
+	//	"an exact copy of the original,";
+	//cout << endl << "Save the copy as a bitmap." << endl;
+	//Save_Bitmap_File(copy1);
 	Remove_Image(copy1);
 
 	//select image processing choice for copy2
@@ -80,7 +80,8 @@ int main()
 			histogramEqualization(copy2);
 			break;
 		case '7':
-			cout << "not implemented edge detect" << endl;
+			cout << "sobel edge detect" << endl;
+			sobelEdgeDetection(copy2);
 			break;
 		case '8':
 			cout << "not implemented thin" << endl;
@@ -101,9 +102,6 @@ int main()
 	Save_Bitmap_File(copy2);
 	Remove_Image(copy2);
 
-	char x;
-	cin >> x;
-	//test
 	return 0;
 }
 

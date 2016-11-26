@@ -19,7 +19,8 @@ void medianSmooth(bmpBITMAP_FILE &image);
 
 void histogramEqualization(bmpBITMAP_FILE &image);
 
-void edgeDetection(bmpBITMAP_FILE &image);
+void sobelEdgeDetection(bmpBITMAP_FILE &image);
+//void edgeDetection(bmpBITMAP_FILE &image);
 
 void thinningAlg(bmpBITMAP_FILE &image);
 

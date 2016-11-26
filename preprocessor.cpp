@@ -207,9 +207,63 @@ void histogramEqualization(bmpBITMAP_FILE &image)
 	}
 }
 
-void edgeDetection(bmpBITMAP_FILE &image)
+// Computes the x component of the gradient vector
+// at a given point in a image.
+// returns gradient in the x direction
+int xGradient(bmpBITMAP_FILE &image, int x, int y)
 {
+	return image.image_ptr[y - 1][x - 1] +
+		2 * image.image_ptr[y][x - 1] +
+		image.image_ptr[y + 1][x - 1] -
+		image.image_ptr[y - 1][x + 1] -
+		2 * image.image_ptr[y][x + 1] -
+		image.image_ptr[y + 1][x + 1];
+}
 
+// Computes the y component of the gradient vector
+// at a given point in a image
+// returns gradient in the y direction
+
+int yGradient(bmpBITMAP_FILE &image, int x, int y)
+{
+	return image.image_ptr[y - 1][x - 1] +
+		2 * image.image_ptr[y - 1][x] +
+		image.image_ptr[y - 1][x + 1] -
+		image.image_ptr[y + 1][x - 1] -
+		2 * image.image_ptr[y + 1][x] -
+		image.image_ptr[y + 1][x + 1];
+}
+
+//uses the aove two functions as helper functions
+void sobelEdgeDetection(bmpBITMAP_FILE &image)
+{
+	bmpBITMAP_FILE imageCopy;
+	Copy_Image(image, imageCopy);
+
+	int width;
+	int height;
+	int gx, gy, sum;
+
+	height = Assemble_Integer(image.infoheader.biHeight);
+	width = Assemble_Integer(image.infoheader.biWidth);
+
+	for (int y = 0; y < height; y++)
+		for (int x = 0; x < width; x++)
+			imageCopy.image_ptr[y][x] = 0;
+
+	for (int y = 1; y < height - 1; y++) 
+	{
+		for (int x = 1; x < width - 1; x++) 
+		{
+			gx = xGradient(image, x, y);
+			gy = yGradient(image, x, y);
+			sum = abs(gx) + abs(gy);
+			sum = sum > 255 ? 255 : sum;
+			sum = sum < 0 ? 0 : sum;
+			imageCopy.image_ptr[y][x] = sum;
+		}
+	}
+	Copy_Image(imageCopy, image);
 }
 
 //placeholder code, doesnt do shit yet
@@ -231,6 +285,5 @@ void thinningAlg(bmpBITMAP_FILE &image)
 			image.image_ptr[i][j] = 1;
 		}
 	}
-
 	Copy_Image(imageCopy, image);
 }
