@@ -12,25 +12,14 @@ int main()
 	Display_FileHeader(orig_image.fileheader);
 	Display_InfoHeader(orig_image.infoheader);
 	
-	//copies from orig_image to copy1(save original) and copy2(editable copy)
-	Copy_Image(orig_image, copy1);
-	cout << endl << "A copy of the file has been " <<
-		"made in main memory.";
 	Copy_Image(orig_image, copy2);
 	cout << endl << "A second copy of the file has been " <<
 		"made to process.";
 
 	//Free memory of image
-	Remove_Image(orig_image); // frees dynamic memory too
-	cout << endl << "The original image has been " <<
-		"removed from main memory.";
-
-	//save copy1 to a output bitmap to show its the same as the original
-	//cout << endl << "To show that the first copy starts as " <<
-	//	"an exact copy of the original,";
-	//cout << endl << "Save the copy as a bitmap." << endl;
-	//Save_Bitmap_File(copy1);
-	Remove_Image(copy1);
+	//Remove_Image(orig_image); // frees dynamic memory too
+	//cout << endl << "The original image has been " <<
+		//"removed from main memory." << endl;
 
 	//select image processing choice for copy2
 	while (exitflag == 0)
@@ -38,7 +27,9 @@ int main()
 		cout << endl << "Choose a processing option." << endl;
 		cout << "0: display array, 1: increase brightness, 2: decrease brightness" << endl;
 		cout << "3: increase contrast, 4: decrease contrast, 5: median smooth" << endl;
-		cout << "6: equalize, 7: edge detect, 8: thin, 9: exit and save image copy" << endl;
+		cout << "6: equalize, 7: edge detect, 8: thin, 9: convert to black and white" << endl;
+		cout << "b: convert to binary(test), g: convert to gray scale" << endl;
+		cout << "s: save current image, r: reset image, e: exit" << endl;
 		char option;
 		cin >> option;
 
@@ -84,9 +75,32 @@ int main()
 			sobelEdgeDetection(copy2);
 			break;
 		case '8':
-			cout << "not implemented thin" << endl;
+			cout << "crappy thin" << endl;
+			//thinning(copy2);
+			doZhangSuenThinning(copy2);
 			break;
 		case '9':
+			cout << "converting grayscale to black and white" << endl;
+			grayToBlackWhite(copy2);
+			break;
+		case 'b':
+			cout << "converting grayscale to binary" << endl;
+			grayToBinary(copy2);
+			break;
+		case 'g':
+			cout << "converting binary to grayscale" << endl;
+			binaryToGray(copy2);
+			break;
+		case 's':
+			cout << endl << "To show the edited copy's changes " << endl;
+			cout << "Save the copy as a bitmap." << endl;
+			Save_Bitmap_File(copy2);
+			break;
+		case 'r':
+			cout << endl << "Resetting changes to image" << endl;
+			Copy_Image(orig_image, copy2);
+			break;
+		case 'e':
 			cout << "Finished" << endl;
 			exitflag = 1;
 			break;
@@ -95,11 +109,10 @@ int main()
 			break;
 		}
 	}
-
 	//save copy2 to a output bitmap to show the changes
-	cout << endl << "To show that the edited copy's changes " << endl;
-	cout << "Save the copy as a bitmap." << endl;
-	Save_Bitmap_File(copy2);
+	//cout << endl << "To show the edited copy's changes " << endl;
+	//cout << "Save the copy as a bitmap." << endl;
+	Remove_Image(orig_image);
 	Remove_Image(copy2);
 
 	return 0;
